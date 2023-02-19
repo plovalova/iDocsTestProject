@@ -3,7 +3,9 @@
 Реализован основной функционал, который описан в задании
 <br>
 Запуск приложения через docker (linux контейнеры):
+<br>
 ./iDocsTestProject/iDocsTestProject docker-compose build
+<br>
 ./iDocsTestProject/iDocsTestProject docker-compose run
 <br>
 Данные по док-ту хранятся в MSSQL, сам файл в MongoDB (используется gridfs для разделения файла на чанки)
