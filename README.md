@@ -4,10 +4,10 @@
 <br>
 Запуск приложения через docker (linux контейнеры):
 <br>
+```bash
 ./iDocsTestProject/iDocsTestProject docker-compose build
-<br>
 ./iDocsTestProject/iDocsTestProject docker-compose run
-<br>
+```
 Данные по док-ту хранятся в MSSQL, сам файл в MongoDB (используется gridfs для разделения файла на чанки)
 <br>
 Для сброса пароля небходимо получить токен из api/Identity/ForgotPassword и подать его в api/Identity/ResetPassword
