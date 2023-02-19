@@ -6,7 +6,7 @@
         {
             /// <summary>
             /// ACCOUNTING - Бухгалтерский
-            /// LEGAL - Юредический
+            /// LEGAL - Юридический
             /// OFFICIAL - Служебный
             /// </summary>
             ACCOUNTING = 1,
