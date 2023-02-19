@@ -8,8 +8,6 @@ namespace iDocsTestProject.Models.Documents
     public class CreateDocumentRequest
     {
         [Required]
-        public Guid CreatedUserId { get; set; }
-        [Required]
         public Guid ReceiverUserId { get; set; }
         [Required]
         public DocumentTypes Type { get; set; }

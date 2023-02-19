@@ -18,8 +18,9 @@ namespace iDocsTestProject.Services.Business
             this.contentRepository = contentRepository;
         }
 
-        public async Task<Guid> CreateDocumentAsync(CreateDocumentRequest request)
+        public async Task<Guid> CreateDocumentAsync(CreateDocumentRequest request, UserModel currentUser)
         {
+
             var contentId = await contentRepository.UploadContentAsync(request.Content);
 
             var newDocument = new Document
@@ -27,7 +28,7 @@ namespace iDocsTestProject.Services.Business
                 Name = request.Name,
                 ContentId = contentId,
                 Type = request.Type,
-                CreatedUserId = request.CreatedUserId,
+                CreatedUserId = Guid.Parse(currentUser.Id),
                 ReceiverUserId = request.ReceiverUserId,
                 CreatedDate = DateTime.Now
             };

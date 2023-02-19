@@ -29,7 +29,8 @@ namespace iDocsTestProject.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<GenericResponse>> CreateDocument([FromForm] CreateDocumentRequest request)
         {
-            var docNum = await documentsService.CreateDocumentAsync(request);
+            var currentUser = User.GetCurrentUser();
+            var docNum = await documentsService.CreateDocumentAsync(request, currentUser);
 
             return Ok(new GenericResponse
             {
