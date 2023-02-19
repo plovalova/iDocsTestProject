@@ -1,0 +1,70 @@
+version: '3.1'
+networks:
+  dev:
+    driver: bridge
+services:
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+    - ASPNETCORE_ENVIRONMENT=Development
+    - "MongoDbConfig:ConnectionString=mongodb://mongo_db:27017"
+    - "ConnectionStrings:DefaultConnection=Server=sql_server;Database=DOCSTEST;User ID=sa;Password=Password_1"
+    - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+    ports:
+    - "8080:80"
+    - "8081:443"
+    networks:
+     - dev
+    depends_on:
+      - sql_server
+      - mongo_db
+      - elasticsearch
+      - kibana
+  sql_server:
+        image: ${DOCKER_REGISTRY-}sqlserver
+        ports:
+        - "1433:1433"
+        user: root
+        build:
+            context: .
+            dockerfile: init-sqlserver/Dockerfile
+        networks:
+        - dev
+        #volumes:
+        #- ./volumes/sqldata:/var/opt/mssql/data
+        #- ./volumes/sqllog:/var/opt/mssql/log
+        #- ./volumes/sqlsecrets:/var/opt/mssql/secrets
+  mongo_db:
+    image: mongo
+    ports:
+     - "27017:27017"
+    volumes:
+     - ./init-mongodb:/docker-entrypoint-initdb.d
+    networks:
+     - dev
+  elasticsearch:
+   image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+   ports:
+    - 9200:9200
+   #volumes:
+   # - ./volumes/elastic:/usr/share/elasticsearch/data
+   environment:
+    - xpack.monitoring.enabled=true
+    - xpack.watcher.enabled=false
+    - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    - discovery.type=single-node
+   networks:
+    - dev
+  kibana:
+   image: docker.elastic.co/kibana/kibana:7.9.2
+   ports:
+    - 5601:5601
+   depends_on:
+    - elasticsearch
+   environment:
+    - ELASTICSEARCH_URL=http://localhost:9200
+   networks:
+    - dev 
