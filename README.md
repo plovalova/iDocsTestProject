@@ -6,7 +6,7 @@
 <br>
 ```bash
 ./iDocsTestProject/iDocsTestProject docker-compose build
-./iDocsTestProject/iDocsTestProject docker-compose run
+./iDocsTestProject/iDocsTestProject docker-compose up
 ```
 Данные по док-ту хранятся в MSSQL, сам файл в MongoDB (используется gridfs для разделения файла на чанки)
 <br>
